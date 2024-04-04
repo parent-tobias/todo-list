@@ -22,19 +22,25 @@ boxHome.forEach(el => {
     })
 })
 let canClikAgain = true;
+
 addNewProject.addEventListener("click", () => {
     
     if(canClikAgain){
         
-
+        const p = new Project();
         const newProject = document.createElement("div");
         newProject.classList.add("newProject");
+        newProject.addEventListener("click", () =>{
+            allProjects.forEach(project, ()=>{
+                //Show separate hmtl
+            })
+        })
 
         const projectName = document.createElement("input");
     
          newProject.appendChild(projectName);
         projectName.classList.add("projectName");
-
+        
 
         const btnAddProject = document.createElement("button");
         btnAddProject.textContent = "Add";
@@ -46,7 +52,7 @@ addNewProject.addEventListener("click", () => {
                 alert("You must fill input with some value");
             } else{
                 projectsList.removeChild(projectsList.lastChild);
-                const p = new Project(projectName.value);
+                p.title = projectName.value
                 allProjects.push(p);
                 showProject();
                 canClikAgain = true;
@@ -78,6 +84,7 @@ class Project {
     constructor(title){
         this.title=title;
     }
+    
 }
 function  showProject(){
     while(projectsList.firstChild){
@@ -94,7 +101,7 @@ function  showProject(){
     const renameProject = document.createElement("button");
     renameProject.textContent = "rename";
     renameProject.addEventListener("click", () => {
-       
+        
         
 
     })
