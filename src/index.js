@@ -1,12 +1,13 @@
 import "./style.css";
 
 
-
+const tasksInRight = document.querySelector(".tasksInRight");
 const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
 const barTitle = document.querySelector(".barTitle");
 const projectsList = document.querySelector(".projectsList");
 let allProjects = [];
+
 class Task {
     constructor(title, description, date, priority){
         this.title = title;
@@ -32,7 +33,7 @@ let canClikAgain = true;
 function forAddingNewProject(){
     if(canClikAgain){
         
-        const p = new Project();
+        
         const newProject = document.createElement("div");
         newProject.classList.add("newProject");
     
@@ -53,9 +54,11 @@ function forAddingNewProject(){
                 alert("You must fill input with some value");
             } else{
                 projectsList.removeChild(projectsList.lastChild);
+                const p = new Project();
                 p.title = projectName.value
+                
                 allProjects.push(p);
-                showProject();
+                makeProject();
                 canClikAgain = true;
             }
         })
@@ -72,13 +75,6 @@ function forAddingNewProject(){
         btnCancelProject.classList.add("btnCancelProject");
 
 
-        newProject.addEventListener("click", () =>{
-            
-            // if(canClikAgain == true){
-            //     btnCreateAddTasks();
-            // }
-            
-        });
         
       
 
@@ -86,7 +82,7 @@ function forAddingNewProject(){
         canClikAgain = false;
     }
 }
-
+console.log(allProjects);
 
 
 addNewProject.addEventListener("click", () => {
@@ -101,10 +97,16 @@ addNewProject.addEventListener("click", () => {
 class Project {
     constructor(title){
         this.title=title;
+        
+    }
+    addTaskIntoProject(task){
+        let allTasks = [];
+        allTasks.push(task);
+
     }
     
 }
-function  showProject(){
+function  makeProject(){
     while(projectsList.firstChild){
         projectsList.removeChild(projectsList.lastChild);
     }
@@ -134,6 +136,80 @@ function  showProject(){
             const createBtn = document.createElement("button");
         createBtn.textContent= "+Add";
         btnAddNewTask.appendChild(createBtn);
+
+        createBtn.addEventListener("click", () =>{
+            // task = new Task();
+            const taskBox = document.createElement("div");
+            const taskTitle = document.createElement("p");
+            taskTitle.textContent = "Title:";
+            taskBox.appendChild(taskTitle);
+            
+            const taskTitleInput = document.createElement("input");
+            taskBox.appendChild(taskTitleInput);
+
+            const taskDetails = document.createElement("p");
+            taskDetails.textContent = "Details:";
+            taskBox.appendChild(taskDetails);
+
+            const taskDetailsInput = document.createElement("input");
+            taskBox.appendChild(taskDetailsInput);
+
+            const add = document.createElement("button");
+            add.textContent = "Add";
+            taskBox.appendChild(add);
+        add.classList.add("add");
+    
+        add.addEventListener("click", () => {
+            
+            tasksInRight.removeChild(tasksInRight.lastChild);
+                const task = new Task();
+                task.title = taskTitleInput.value;
+                task.description = taskDetailsInput.value;
+                pro.addTaskIntoProject(task);
+                
+                const taskBox = document.createElement("div");
+                const title = document.createElement("h3");
+                title.textContent = task.title;
+                taskBox.appendChild(title);
+
+                const description = document.createElement("h3");
+                description.textContent = task.description;
+                taskBox.appendChild(description);
+
+                const done = document.createElement("button");
+                done.textContent = "done?";
+                taskBox.appendChild(done);
+
+                tasksInRight.appendChild(taskBox);
+                
+
+                //makeTaks();
+                
+            
+        })
+
+        const btnCancelTask = document.createElement("button");
+        btnCancelTask.textContent = "Cancel";
+        taskBox.appendChild(btnCancelTask);
+        btnCancelTask.addEventListener("click", () => {
+            tasksInRight.removeChild(tasksInRight.lastChild);
+        
+
+        })
+
+
+
+
+
+
+
+            tasksInRight.appendChild(taskBox);
+
+
+        })
+
+
+
         taksBtnCreated = true;
         
         }
@@ -149,7 +225,7 @@ function  showProject(){
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
         allProjects.splice(index,1);
-        showProject();
+        makeProject();
     })
 
     projectsList.appendChild(projectBox);
