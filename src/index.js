@@ -1,4 +1,8 @@
 import "./style.css";
+
+
+
+const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
 const barTitle = document.querySelector(".barTitle");
 const projectsList = document.querySelector(".projectsList");
@@ -23,18 +27,15 @@ boxHome.forEach(el => {
 })
 let canClikAgain = true;
 
-addNewProject.addEventListener("click", () => {
-    
+
+
+function forAddingNewProject(){
     if(canClikAgain){
         
         const p = new Project();
         const newProject = document.createElement("div");
         newProject.classList.add("newProject");
-        newProject.addEventListener("click", () =>{
-            allProjects.forEach(project, ()=>{
-                //Show separate hmtl
-            })
-        })
+    
 
         const projectName = document.createElement("input");
     
@@ -71,9 +72,26 @@ addNewProject.addEventListener("click", () => {
         btnCancelProject.classList.add("btnCancelProject");
 
 
+        newProject.addEventListener("click", () =>{
+            
+            // if(canClikAgain == true){
+            //     btnCreateAddTasks();
+            // }
+            
+        });
+        
+      
+
         projectsList.appendChild(newProject);
         canClikAgain = false;
     }
+}
+
+
+
+addNewProject.addEventListener("click", () => {
+    
+    forAddingNewProject();
 
     
     
@@ -93,7 +111,7 @@ function  showProject(){
     allProjects.forEach(pro => {
         let index = allProjects.indexOf(pro);
         
-        const projectBox = document.createElement("div");
+    const projectBox = document.createElement("div");
     const para = document.createElement("h3");
     para.textContent = pro.title;
     projectBox.appendChild(para);
@@ -102,9 +120,28 @@ function  showProject(){
     renameProject.textContent = "rename";
     renameProject.addEventListener("click", () => {
         
-        
+        //rename project
 
     })
+    let taksBtnCreated = false;
+
+    projectBox.addEventListener("click", () => {
+        barTitle.innerHTML = pro.title;
+        if(taksBtnCreated == false){
+            while(btnAddNewTask.firstChild){
+                btnAddNewTask.removeChild(btnAddNewTask.lastChild);
+            }
+            const createBtn = document.createElement("button");
+        createBtn.textContent= "+Add";
+        btnAddNewTask.appendChild(createBtn);
+        taksBtnCreated = true;
+        
+        }
+        
+    })
+
+
+
     projectBox.appendChild(renameProject);
 
     const removeProject = document.createElement("button");
