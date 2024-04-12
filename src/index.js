@@ -1,4 +1,6 @@
 import "./style.css";
+import { startOfDay,getDate } from "date-fns";
+
 
 
 const tasksInRight = document.querySelector(".tasksInRight");
@@ -165,6 +167,14 @@ function  makeProject(){
             const taskDetailsInput = document.createElement("input");
             taskBox.appendChild(taskDetailsInput);
 
+            const datePara = document.createElement("p");
+            datePara.textContent = "Pick a date";
+            taskBox.appendChild(datePara);
+        
+            const datePicker = document.createElement("input");
+            datePicker.setAttribute('type', 'date');
+            taskBox.appendChild(datePicker);
+
             const importance = document.createElement("p");
             importance.textContent = "priority?";
             taskBox.appendChild(importance);
@@ -204,6 +214,7 @@ function  makeProject(){
                 } else if(imp.textContent == "priority"){
                     task.priority = "priority";
                 }
+                task.date = datePicker.value;
                 pro.addTaskIntoProject(task);
                 
                 makeTask(task);
@@ -244,6 +255,11 @@ function  makeProject(){
         const description = document.createElement("p");
         description.textContent = task.description;
         taskBox.appendChild(description);
+
+        const date = document.createElement("p");
+        date.textContent = task.date;
+        taskBox.appendChild(date);
+
 
         const importance = document.createElement("p");
         importance.textContent = task.priority;
