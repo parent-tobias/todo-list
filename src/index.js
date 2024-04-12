@@ -23,7 +23,7 @@ boxHome.forEach(el => {
      
     el.addEventListener('click', () => {
         barTitle.innerHTML = el.innerHTML;
-        
+        tasksInRight.innerHTML ="";  
     })
 })
 let canClikAgain = true;
@@ -115,7 +115,7 @@ function  makeProject(){
         let index = allProjects.indexOf(pro);
         
     const projectBox = document.createElement("div");
-    const para = document.createElement("h3");
+    const para = document.createElement("p");
     para.textContent = pro.title;
     projectBox.appendChild(para);
 
@@ -165,6 +165,29 @@ function  makeProject(){
             const taskDetailsInput = document.createElement("input");
             taskBox.appendChild(taskDetailsInput);
 
+            const importance = document.createElement("p");
+            importance.textContent = "priority?";
+            taskBox.appendChild(importance);
+            const imp = document.createElement("button");
+            imp.textContent = "not priority";
+            imp.style.color = "black";
+            
+            taskBox.appendChild(imp);
+            imp.addEventListener("click" , ()=> {
+                if(imp.textContent == "not priority"){
+                    imp.style.color = "white";
+                    imp.style.backgroundColor ="green";
+                    imp.textContent = "priority";
+                } 
+                else if(imp.textContent == "priority"){
+                    imp.style.backgroundColor ="red";
+                    imp.style.color = "black";
+                    imp.textContent = "not priority";
+                }
+            })
+
+            
+
             const add = document.createElement("button");
             add.textContent = "Add";
             taskBox.appendChild(add);
@@ -176,11 +199,13 @@ function  makeProject(){
                 const task = new Task();
                 task.title = taskTitleInput.value;
                 task.description = taskDetailsInput.value;
+                if(imp.textContent == "not priority"){
+                    task.priority = "not priority";
+                } else if(imp.textContent == "priority"){
+                    task.priority = "priority";
+                }
                 pro.addTaskIntoProject(task);
                 
-            
-                
-
                 makeTask(task);
                 
             
@@ -212,16 +237,36 @@ function  makeProject(){
     function makeTask(task){
         const taskBox = document.createElement("div");
         taskBox.classList.add("taskBox");
-        const title = document.createElement("h3");
+        const title = document.createElement("p");
         title.textContent = task.title;
         taskBox.appendChild(title);
 
-        const description = document.createElement("h3");
+        const description = document.createElement("p");
         description.textContent = task.description;
         taskBox.appendChild(description);
 
+        const importance = document.createElement("p");
+        importance.textContent = task.priority;
+        taskBox.appendChild(importance);
+
         const done = document.createElement("button");
-        done.textContent = "done?";
+        done.textContent = "unfinished";
+        
+        done.style.backgroundColor ="red";
+        done.addEventListener("click", ()=>{
+            if(done.textContent == "unfinished"){
+                done.style.color = "white";
+                done.style.backgroundColor ="green";
+                done.textContent = "finished";
+            } 
+            else if(done.textContent == "finished"){
+                done.style.backgroundColor ="red";
+                done.style.color = "black";
+                 done.textContent = "unfinished";
+            }
+            
+
+        })
         taskBox.appendChild(done);
 
         tasksInRight.appendChild(taskBox);

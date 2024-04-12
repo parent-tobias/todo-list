@@ -93,7 +93,7 @@ h2{
 }
 .taskBox{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     background-color: #9de0a9;
     margin-left: 30px;
     margin-right: 30px;
