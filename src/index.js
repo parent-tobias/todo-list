@@ -1,8 +1,8 @@
 import "./style.css";
 import { startOfDay,getDate } from "date-fns";
 
-
-
+const rightBar = document.querySelector(".rightBar");
+const allTasks = document.querySelector("#allTasks");
 const tasksInRight = document.querySelector(".tasksInRight");
 const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
@@ -11,23 +11,25 @@ const projectsList = document.querySelector(".projectsList");
 let allProjects = [];
 
 class Task {
-    constructor(title, description, date, priority){
+    constructor(title, description, date, priority, status){
         this.title = title;
         this.description = description;
         this.date = date;
         this.priority = priority;
+        this.status = status;
     }
 }
 
 
 const boxHome = document.querySelectorAll(".boxHome");
-boxHome.forEach(el => {
+// boxHome.forEach(el => {
      
-    el.addEventListener('click', () => {
-        barTitle.innerHTML = el.innerHTML;
-        tasksInRight.innerHTML ="";  
-    })
-})
+//     el.addEventListener('click', () => {
+//         rightBar.innerHTML ="";  
+//         barTitle.innerHTML = el.innerHTML;
+        
+//     })
+// })
 let canClikAgain = true;
 
 
@@ -214,10 +216,11 @@ function  makeProject(){
                 } else if(imp.textContent == "priority"){
                     task.priority = "priority";
                 }
+                
                 task.date = datePicker.value;
+                makeTask(task);
                 pro.addTaskIntoProject(task);
                 
-                makeTask(task);
                 
             
         })
@@ -245,49 +248,7 @@ function  makeProject(){
         }
         
     })
-    function makeTask(task){
-        const taskBox = document.createElement("div");
-        taskBox.classList.add("taskBox");
-        const title = document.createElement("p");
-        title.textContent = task.title;
-        taskBox.appendChild(title);
-
-        const description = document.createElement("p");
-        description.textContent = task.description;
-        taskBox.appendChild(description);
-
-        const date = document.createElement("p");
-        date.textContent = task.date;
-        taskBox.appendChild(date);
-
-
-        const importance = document.createElement("p");
-        importance.textContent = task.priority;
-        taskBox.appendChild(importance);
-
-        const done = document.createElement("button");
-        done.textContent = "unfinished";
-        
-        done.style.backgroundColor ="red";
-        done.addEventListener("click", ()=>{
-            if(done.textContent == "unfinished"){
-                done.style.color = "white";
-                done.style.backgroundColor ="green";
-                done.textContent = "finished";
-            } 
-            else if(done.textContent == "finished"){
-                done.style.backgroundColor ="red";
-                done.style.color = "black";
-                 done.textContent = "unfinished";
-            }
-            
-
-        })
-        taskBox.appendChild(done);
-
-        tasksInRight.appendChild(taskBox);
-     }
-
+    
 
     projectBox.appendChild(renameProject);
 
@@ -296,7 +257,9 @@ function  makeProject(){
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
         allProjects.splice(index,1);
-
+        barTitle.value = "";
+        btnAddNewTask.innerHTML = "";
+        tasksInRight.innerHTML = "";
         makeProject();
     })
 
@@ -304,3 +267,61 @@ function  makeProject(){
     })
     
 }
+function makeTask(task){
+    const taskBox = document.createElement("div");
+    taskBox.classList.add("taskBox");
+    const title = document.createElement("p");
+    title.textContent = task.title;
+    taskBox.appendChild(title);
+
+    const description = document.createElement("p");
+    description.textContent = task.description;
+    taskBox.appendChild(description);
+
+    const date = document.createElement("p");
+    date.textContent = task.date;
+    taskBox.appendChild(date);
+
+
+    const importance = document.createElement("p");
+    importance.textContent = task.priority;
+    taskBox.appendChild(importance);
+
+    const done = document.createElement("button");
+    done.textContent = "unfinished";
+    task.status = "unfinished"
+    done.style.backgroundColor ="red";
+    done.addEventListener("click", ()=>{
+        if(done.textContent == "unfinished"){
+            done.style.color = "white";
+            done.style.backgroundColor ="green";
+            done.textContent = "finished";
+            task.status = "finished"
+        } 
+        else if(done.textContent == "finished"){
+            done.style.backgroundColor ="red";
+            done.style.color = "black";
+             done.textContent = "unfinished";
+             task.status = "unfinished"
+        }
+        
+
+    })
+    taskBox.appendChild(done);
+
+    tasksInRight.appendChild(taskBox);
+ }
+
+
+allTasks.addEventListener("click" , () => {
+   
+    barTitle.textContent = allTasks.innerHTML;
+    btnAddNewTask.innerHTML = "";
+    tasksInRight.innerHTML = "";
+    allProjects.forEach(project => {
+        project.tasks.forEach(taskInProject => {
+            makeTask(taskInProject);
+            
+          })
+    })
+})
