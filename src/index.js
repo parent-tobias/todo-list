@@ -137,9 +137,7 @@ function  makeProject(){
         
       tasksInRight.innerHTML = "";
         
-      pro.tasks.forEach(taskInProject => {
-        makeTask(taskInProject);
-      })
+     
 
 
         if(taksBtnCreated == false){
@@ -241,12 +239,15 @@ function  makeProject(){
 
         })
 
-
+        
 
         taksBtnCreated = true;
         
         }
-        
+        // displaying tasks in current project
+        pro.tasks.forEach(taskInProject => {
+            makeTask(taskInProject);
+          })
     })
     
 
@@ -256,8 +257,9 @@ function  makeProject(){
     removeProject.textContent = "remove";
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
+        
         allProjects.splice(index,1);
-        barTitle.value = "";
+        barTitle.textContent = "";
         btnAddNewTask.innerHTML = "";
         tasksInRight.innerHTML = "";
         makeProject();
@@ -267,6 +269,9 @@ function  makeProject(){
     })
     
 }
+
+
+
 function makeTask(task){
     const taskBox = document.createElement("div");
     taskBox.classList.add("taskBox");
