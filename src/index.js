@@ -21,15 +21,6 @@ class Task {
 }
 
 
-const boxHome = document.querySelectorAll(".boxHome");
-// boxHome.forEach(el => {
-     
-//     el.addEventListener('click', () => {
-//         rightBar.innerHTML ="";  
-//         barTitle.innerHTML = el.innerHTML;
-        
-//     })
-// })
 let canClikAgain = true;
 
 
@@ -136,22 +127,22 @@ function  makeProject(){
         barTitle.innerHTML = pro.title;
         
       tasksInRight.innerHTML = "";
-        
+    
+      taksBtnCreated = false;
      
 
 
         if(taksBtnCreated == false){
-            while(btnAddNewTask.firstChild){
-                btnAddNewTask.removeChild(btnAddNewTask.lastChild);
-            }
+            btnAddNewTask.innerHTML = "";
+
             const createBtn = document.createElement("button");
-        createBtn.textContent= "+Add";
-        btnAddNewTask.appendChild(createBtn);
+            createBtn.textContent= "+Add";
+            btnAddNewTask.appendChild(createBtn);
 
         
 
         createBtn.addEventListener("click", () =>{
-            // task = new Task();
+        
             const taskBox = document.createElement("div");
             const taskTitle = document.createElement("p");
             taskTitle.textContent = "Title:";
@@ -201,11 +192,11 @@ function  makeProject(){
             const add = document.createElement("button");
             add.textContent = "Add";
             taskBox.appendChild(add);
-        add.classList.add("add");
+            add.classList.add("add");
     
         add.addEventListener("click", () => {
             
-            tasksInRight.removeChild(tasksInRight.lastChild);
+                tasksInRight.removeChild(tasksInRight.lastChild);
                 const task = new Task();
                 task.title = taskTitleInput.value;
                 task.description = taskDetailsInput.value;
@@ -216,9 +207,9 @@ function  makeProject(){
                 }
                 
                 task.date = datePicker.value;
-                makeTask(task);
+                makeTask(task,pro);
                 pro.addTaskIntoProject(task);
-                
+                      
                 
             
         })
@@ -245,9 +236,8 @@ function  makeProject(){
         
         }
         // displaying tasks in current project
-        pro.tasks.forEach(taskInProject => {
-            makeTask(taskInProject);
-          })
+       
+        displayTasks(pro);
     })
     
 
@@ -269,10 +259,14 @@ function  makeProject(){
     })
     
 }
+function displayTasks(pro){
+    pro.tasks.forEach(taskInProject => {
+        makeTask(taskInProject);
+      })
+}
 
 
-
-function makeTask(task){
+function makeTask(task,pro){
     const taskBox = document.createElement("div");
     taskBox.classList.add("taskBox");
     const title = document.createElement("p");
@@ -313,6 +307,17 @@ function makeTask(task){
 
     })
     taskBox.appendChild(done);
+
+    const delTask = document.createElement("button");
+    delTask.textContent = "delete";
+    delTask.addEventListener("click", () => {
+        let index = pro.tasks.indexOf(task);
+        pro.tasks.splice(index,1);
+        tasksInRight.innerHTML = "";
+        displayTasks(pro);
+        
+    })
+    taskBox.appendChild(delTask);
 
     tasksInRight.appendChild(taskBox);
  }
