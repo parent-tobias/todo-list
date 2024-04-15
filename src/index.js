@@ -97,8 +97,11 @@ class Project {
     addTaskIntoProject(task){
         
         this.tasks.push(task);
-
     }
+    removeTask(index){
+        this.tasks.splice(index,1);
+    }
+   
     
 }
  
@@ -206,10 +209,13 @@ function  makeProject(){
                     task.priority = "priority";
                 }
                 
+                
                 task.date = datePicker.value;
-                makeTask(task,pro);
                 pro.addTaskIntoProject(task);
-                      
+                //let indexx = pro.tasks.indexOf(task);
+                makeTask(task,pro);
+                
+               
                 
             
         })
@@ -261,12 +267,16 @@ function  makeProject(){
 }
 function displayTasks(pro){
     pro.tasks.forEach(taskInProject => {
-        makeTask(taskInProject);
+        makeTask(taskInProject,pro);
       })
 }
 
 
 function makeTask(task,pro){
+
+    
+
+    
     const taskBox = document.createElement("div");
     taskBox.classList.add("taskBox");
     const title = document.createElement("p");
@@ -307,12 +317,14 @@ function makeTask(task,pro){
 
     })
     taskBox.appendChild(done);
+    
 
     const delTask = document.createElement("button");
     delTask.textContent = "delete";
     delTask.addEventListener("click", () => {
-        let index = pro.tasks.indexOf(task);
-        pro.tasks.splice(index,1);
+        
+        
+        pro.removeTask(pro.tasks.indexOf(task));
         tasksInRight.innerHTML = "";
         displayTasks(pro);
         
