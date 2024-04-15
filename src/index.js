@@ -3,6 +3,7 @@ import { startOfDay,getDate } from "date-fns";
 
 const rightBar = document.querySelector(".rightBar");
 const allTasks = document.querySelector("#allTasks");
+const important = document.querySelector("#important");
 const tasksInRight = document.querySelector(".tasksInRight");
 const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
@@ -346,4 +347,20 @@ allTasks.addEventListener("click" , () => {
             
           })
     })
+})
+
+important.addEventListener("click" , ()=> {
+    barTitle.textContent = important.innerHTML;
+    btnAddNewTask.innerHTML = "";
+    tasksInRight.innerHTML = "";
+    allProjects.forEach(project => {
+        project.tasks.forEach(taskInProject => {
+            if(taskInProject.priority == "priority"){
+                makeTask(taskInProject);
+            }
+            
+            
+          })
+    })
+
 })
