@@ -11,6 +11,8 @@ const barTitle = document.querySelector(".barTitle");
 const projectsList = document.querySelector(".projectsList");
 let allProjects = [];
 
+
+
 class Task {
     constructor(title, description, date, priority, status){
         this.title = title;
@@ -29,13 +31,14 @@ let canClikAgain = true;
 function forAddingNewProject(){
     if(canClikAgain){
         
+   
         
         const newProject = document.createElement("div");
         newProject.classList.add("newProject");
     
 
         const projectName = document.createElement("input");
-    
+        
          newProject.appendChild(projectName);
         projectName.classList.add("projectName");
         
@@ -76,7 +79,9 @@ function forAddingNewProject(){
 
         projectsList.appendChild(newProject);
         canClikAgain = false;
+        localStorage.setItem("p", JSON.stringify(p));
     }
+    
 }
 console.log(allProjects);
 
@@ -107,6 +112,8 @@ class Project {
 }
  
 function  makeProject(){
+
+    
     while(projectsList.firstChild){
         projectsList.removeChild(projectsList.lastChild);
     }
@@ -114,6 +121,7 @@ function  makeProject(){
         let index = allProjects.indexOf(pro);
         
     const projectBox = document.createElement("div");
+    projectBox.classList.add("projectBox");
     const para = document.createElement("p");
     para.textContent = pro.title;
     projectBox.appendChild(para);
@@ -213,6 +221,9 @@ function  makeProject(){
                 
                 task.date = datePicker.value;
                 pro.addTaskIntoProject(task);
+                localStorage.setItem("task", JSON.stringify(task));
+                
+               
                 //let indexx = pro.tasks.indexOf(task);
                 makeTask(task,pro);
                 
@@ -326,6 +337,7 @@ function makeTask(task,pro){
         
         
         pro.removeTask(pro.tasks.indexOf(task));
+        
         tasksInRight.innerHTML = "";
         displayTasks(pro);
         
@@ -384,3 +396,4 @@ today.addEventListener("click", () => {
     })
 
 })
+
