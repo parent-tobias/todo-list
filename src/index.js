@@ -12,7 +12,6 @@ const projectsList = document.querySelector(".projectsList");
 let allProjects = [];
 
 
-
 class Task {
     constructor(title, description, date, priority, status){
         this.title = title;
@@ -111,6 +110,7 @@ class Project {
     
 }
  
+
 function  makeProject(){
 
     
@@ -126,13 +126,7 @@ function  makeProject(){
     para.textContent = pro.title;
     projectBox.appendChild(para);
 
-    const renameProject = document.createElement("button");
-    renameProject.textContent = "rename";
-    renameProject.addEventListener("click", () => {
-        
-        //rename project
-
-    })
+    
     let taksBtnCreated = false;
 
     projectBox.addEventListener("click", () => {
@@ -259,7 +253,7 @@ function  makeProject(){
     })
     
 
-    projectBox.appendChild(renameProject);
+    
 
     const removeProject = document.createElement("button");
     removeProject.textContent = "remove";
