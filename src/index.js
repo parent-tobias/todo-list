@@ -258,10 +258,10 @@ function  makeProject(){
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
         allProjects.splice(index,1);
+        makeProject();
         barTitle.textContent = "";
         btnAddNewTask.innerHTML = "";
         tasksInRight.innerHTML = "";
-        makeProject();
     })
 
     projectsList.appendChild(projectBox);
@@ -275,6 +275,8 @@ function displayTasks(pro){
       })
 }
 
+
+function remProject(remBtn,index){}
 
 function makeTask(task,pro){
 
