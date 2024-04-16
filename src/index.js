@@ -78,7 +78,6 @@ function forAddingNewProject(){
 
         projectsList.appendChild(newProject);
         canClikAgain = false;
-        localStorage.setItem("p", JSON.stringify(p));
     }
     
 }
@@ -215,7 +214,6 @@ function  makeProject(){
                 
                 task.date = datePicker.value;
                 pro.addTaskIntoProject(task);
-                localStorage.setItem("task", JSON.stringify(task));
                 
                
                 //let indexx = pro.tasks.indexOf(task);
@@ -259,7 +257,6 @@ function  makeProject(){
     removeProject.textContent = "remove";
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
-        
         allProjects.splice(index,1);
         barTitle.textContent = "";
         btnAddNewTask.innerHTML = "";
@@ -272,6 +269,7 @@ function  makeProject(){
     
 }
 function displayTasks(pro){
+   
     pro.tasks.forEach(taskInProject => {
         makeTask(taskInProject,pro);
       })
