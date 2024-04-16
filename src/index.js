@@ -1,7 +1,7 @@
 import "./style.css";
 import { startOfDay,getDate } from "date-fns";
 
-const rightBar = document.querySelector(".rightBar");
+const today = document.querySelector("#today");
 const allTasks = document.querySelector("#allTasks");
 const important = document.querySelector("#important");
 const tasksInRight = document.querySelector(".tasksInRight");
@@ -357,6 +357,26 @@ important.addEventListener("click" , ()=> {
         project.tasks.forEach(taskInProject => {
             if(taskInProject.priority == "priority"){
                 makeTask(taskInProject);
+            }
+            
+            
+          })
+    })
+
+})
+
+today.addEventListener("click", () => {
+    barTitle.textContent = today.innerHTML;
+    btnAddNewTask.innerHTML = "";
+    tasksInRight.innerHTML = "";
+    allProjects.forEach(project => {
+        project.tasks.forEach(taskInProject => {
+            const date = new Date();
+            date.getDate();
+            const result = date.toISOString().split('T')[0]
+            
+            if(taskInProject.date == result){
+               makeTask(taskInProject);
             }
             
             
