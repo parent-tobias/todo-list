@@ -214,7 +214,8 @@ function  makeProject(){
                 
                 task.date = datePicker.value;
                 pro.addTaskIntoProject(task);
-                
+                //localStorage.setItem("task", JSON.stringify(task));
+                //pro.addTaskIntoProject(JSON.parse(localStorage.getItem("task")));
                
                 //let indexx = pro.tasks.indexOf(task);
                 makeTask(task,pro);
@@ -276,7 +277,7 @@ function displayTasks(pro){
 }
 
 
-function remProject(remBtn,index){}
+
 
 function makeTask(task,pro){
 
