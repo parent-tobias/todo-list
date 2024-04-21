@@ -9,7 +9,9 @@ const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
 const barTitle = document.querySelector(".barTitle");
 const projectsList = document.querySelector(".projectsList");
-let allProjects = [];
+let allProjects= [];
+
+let projectsAll = JSON.parse(localStorage.getItem("allProjects")) || [];
 
 
 class Task {
@@ -55,9 +57,27 @@ function forAddingNewProject(){
                 const p = new Project();
                 p.title = projectName.value
                 
-                allProjects.push(p);
+                projectsAll.push(p)
+              
+            
+                
+                localStorage.setItem("allProjects", JSON.stringify(projectsAll));
+               
+                
+                //allProjects.push(p);
                 makeProject();
                 canClikAgain = true;
+
+
+                // const obj2 = JSON.parse(localStorage.getItem("allProjects"))
+                //  obj2.addTaskIntoProject = Project.prototype.addTaskIntoProject;
+                 // obj2.removeTask = Project.prototype.removeTask;
+
+                  // localStorage.setItem("allProjects", JSON.stringify(projectsAll));
+                // localStorage.setItem("tasks", JSON.stringify(p.tasks));
+                //allProjects.push(p);
+                
+                //allProjects.push(obj2);
             }
         })
 
@@ -111,13 +131,13 @@ class Project {
  
 
 function  makeProject(){
-
+    let all = JSON.parse(localStorage.getItem("allProjects"))
     
     while(projectsList.firstChild){
         projectsList.removeChild(projectsList.lastChild);
     }
-    allProjects.forEach(pro => {
-        let index = allProjects.indexOf(pro);
+    all.forEach(pro => {
+        let index = all.indexOf(pro);
         
     const projectBox = document.createElement("div");
     projectBox.classList.add("projectBox");
@@ -213,9 +233,17 @@ function  makeProject(){
                 
                 
                 task.date = datePicker.value;
+                
                 pro.addTaskIntoProject(task);
-                //localStorage.setItem("task", JSON.stringify(task));
-                //pro.addTaskIntoProject(JSON.parse(localStorage.getItem("task")));
+
+                localStorage.setItem("allProjects", JSON.stringify(projectsAll));
+
+                //pro.addTaskIntoProject(task);
+                
+                // const obj2 = JSON.parse(localStorage.getItem("tasks"))
+                // const project = JSON.parse(localStorage.getItem("project"))
+                // project.tasks.Add(obj2)
+                //  pro.addTaskIntoProject(obj2);
                
                 //let indexx = pro.tasks.indexOf(task);
                 makeTask(task,pro);
@@ -259,6 +287,8 @@ function  makeProject(){
     projectBox.appendChild(removeProject);
     removeProject.addEventListener("click", ()=> {
         allProjects.splice(index,1);
+        
+        //JSON.parse(localStorage.getItem("project"))
         makeProject();
         barTitle.textContent = "";
         btnAddNewTask.innerHTML = "";
@@ -277,7 +307,7 @@ function displayTasks(pro){
 }
 
 
-
+//localStorage.clear();
 
 function makeTask(task,pro){
 
