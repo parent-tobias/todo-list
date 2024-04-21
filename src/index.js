@@ -1,5 +1,11 @@
 import "./style.css";
 import { startOfDay,getDate } from "date-fns";
+import Task from './components/Task';
+import Project, {importProjectsFromLocalStorage, saveProjectsToLocalStorage} from './components/Project';
+
+
+let allProjects = importProjectsFromLocalStorage('allProjects');
+
 
 const today = document.querySelector("#today");
 const allTasks = document.querySelector("#allTasks");
@@ -9,20 +15,11 @@ const btnAddNewTask = document.querySelector(".btnAddNewTask");
 const addNewProject = document.querySelector(".addNewProject");
 const barTitle = document.querySelector(".barTitle");
 const projectsList = document.querySelector(".projectsList");
-let allProjects= [];
 
-let projectsAll = JSON.parse(localStorage.getItem("allProjects")) || [];
+makeProject();
 
 
-class Task {
-    constructor(title, description, date, priority, status){
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.priority = priority;
-        this.status = status;
-    }
-}
+
 
 
 let canClikAgain = true;
@@ -57,11 +54,12 @@ function forAddingNewProject(){
                 const p = new Project();
                 p.title = projectName.value
                 
-                projectsAll.push(p)
+                allProjects.push(p)
               
+                saveProjectsToLocalStorage('allProjects', allProjects);
             
                 
-                localStorage.setItem("allProjects", JSON.stringify(projectsAll));
+                // localStorage.setItem("allProjects", JSON.stringify(projectsAll));
                
                 
                 //allProjects.push(p);
@@ -112,22 +110,6 @@ addNewProject.addEventListener("click", () => {
     
 })
 
-
-class Project {
-    constructor(title){
-        this.title=title;
-        this.tasks = [];
-    }
-    addTaskIntoProject(task){
-        
-        this.tasks.push(task);
-    }
-    removeTask(index){
-        this.tasks.splice(index,1);
-    }
-   
-    
-}
  
 
 function  makeProject(){
@@ -136,8 +118,7 @@ function  makeProject(){
     while(projectsList.firstChild){
         projectsList.removeChild(projectsList.lastChild);
     }
-    all.forEach(pro => {
-        let index = all.indexOf(pro);
+    allProjects.forEach((pro, index) => {
         
     const projectBox = document.createElement("div");
     projectBox.classList.add("projectBox");
@@ -236,7 +217,8 @@ function  makeProject(){
                 
                 pro.addTaskIntoProject(task);
 
-                localStorage.setItem("allProjects", JSON.stringify(projectsAll));
+                saveProjectsToLocalStorage('allProjects', allProjects);
+                // localStorage.setItem("allProjects", JSON.stringify(projectsAll));
 
                 //pro.addTaskIntoProject(task);
                 
@@ -288,7 +270,8 @@ function  makeProject(){
     removeProject.addEventListener("click", ()=> {
         allProjects.splice(index,1);
         
-        //JSON.parse(localStorage.getItem("project"))
+        saveProjectsToLocalStorage('allProjects', allProjects);
+
         makeProject();
         barTitle.textContent = "";
         btnAddNewTask.innerHTML = "";
@@ -362,6 +345,8 @@ function makeTask(task,pro){
         
         
         pro.removeTask(pro.tasks.indexOf(task));
+
+        saveProjectsToLocalStorage('allProjects', allProjects);
         
         tasksInRight.innerHTML = "";
         displayTasks(pro);
